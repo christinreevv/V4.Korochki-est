@@ -14,4 +14,4 @@ Route::get('/login', [AuthController::class, 'loginForm']); // показ фор
 Route::post('/register', [AuthController::class, 'register'])->name('register'); // регистрация
 Route::post('/login', [AuthController::class, 'login']); // авторизация
 
-Route::get('/logout', [AuthController::class, 'logout']); // показ формы авторизации
+Route::get('/logout', [AuthController::class, 'logout']); // выход
