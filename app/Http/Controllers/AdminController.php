@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,14 +14,19 @@ class AdminController extends Controller
         return view('admin.index', compact('applications'));
     }
 
-    public function status(Request $request, $id)
-    {
-       $application = Application::all;
+   public function status(Request $request, $id)
+{
+    $request->validate([
+        'status' => ['required']
+    ]);
 
-       $application->status = $request->status;
+    $application = Application::findOrFail($id);
 
-       $application->save();
+    $application->update([
+        'status' => $request->status
+    ]);
 
-       return back();
+    return redirect('/admin')
+        ->with('success', 'Статус обновлен');
     }
 }
