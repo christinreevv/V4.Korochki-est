@@ -8,7 +8,6 @@ class AdminController extends Controller
 {
     public function index()
     {
-
         $applications = Application::all();
 
         return view('admin.index', compact('applications'));
@@ -16,12 +15,12 @@ class AdminController extends Controller
 
     public function status(Request $request, $id)
     {
-        $application = Application::find($id);
+       $application = Application::all;
 
-        $application->status = $request->status;
+       $application->status = $request->status;
 
-        $application->save();
+       $application->save();
 
-        return back();
+       return back();
     }
 }

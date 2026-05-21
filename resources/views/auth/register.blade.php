@@ -1,40 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="form-box">
+
+    <h3 class="mb-3 text-center">Регистрация</h3>
+
     <form action="{{ route('register') }}" method="POST">
         @csrf
 
         <div class="mb-3">
-            <label for="name" class="form-label">ФИО</label>
-            <input type="text" class="form-control" id="name" name="full_name">
+            <label class="form-label">ФИО</label>
+            <input type="text" name="full_name" class="form-control">
         </div>
-
 
         <div class="mb-3">
-            <label for="login" class="form-label">Логин</label>
-            <input type="text" class="form-control" id="login" name="login">
+            <label class="form-label">Логин</label>
+            <input type="text" name="login" class="form-control">
         </div>
-
 
         <div class="mb-3">
-            <label for="phone" class="form-label">Телефон</label>
-            <input type="text" class="form-control" id="phone" name="phone">
+            <label class="form-label">Телефон</label>
+            <input type="text" name="phone" class="form-control">
         </div>
-
 
         <div class="mb-3">
-            <label for="email" class="form-label">Почта</label>
-            <input type="text" class="form-control" id="email" name="email">
+            <label class="form-label">Почта</label>
+            <input type="email" name="email" class="form-control">
         </div>
-
 
         <div class="mb-3">
-            <label for="password" class="form-label">Пароль</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <label class="form-label">Пароль</label>
+            <input type="password" name="password" class="form-control">
         </div>
 
-
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        <button class="btn btn-primary w-100">
+            Зарегистрироваться
+        </button>
 
     </form>
+
+</div>
+
 @endsection

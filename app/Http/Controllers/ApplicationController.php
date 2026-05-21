@@ -9,7 +9,10 @@ class ApplicationController extends Controller
 {
     public function index()
     {
-        $applications = Application::where('user_id', session('user')->id)->get();
+        $applications = Application::where(
+            'user_id',
+            auth()->id()
+        )->latest()->get();
 
         return view('applications.index', compact('applications'));
     }
@@ -23,12 +26,12 @@ class ApplicationController extends Controller
     {
         $validation = $request->validate([
             'course_name' => 'required',
-            'start_date' => 'required',
+            'start_date' => 'required', 'date',
             'payment_method' => 'required',
         ]);
 
         $application = Application::create([
-            'user_id' => session('user')->id,
+            'user_id' => auth()->id(),
             'course_name' => $validation['course_name'],
             'start_date' => $validation['start_date'],
             'payment_method' => $validation['payment_method'],
@@ -40,12 +43,20 @@ class ApplicationController extends Controller
 
     public function review(Request $request, $id)
     {
-        $application = Application::find($id);
+        $request->validate([
+            'review' => ['required', 'min:3']
+        ]);
 
-        $application->review = $request->review;
+        $application = Application::where(
+            'user_id',
+            auth()->id()
+        )->findOrFail($id);
 
-        $application->save();
+        $application->update([
+            'review' => $request->review
+        ]);
 
-        return back();
+        return back()
+            ->with('success', 'Отзыв добавлен');
     }
 }
