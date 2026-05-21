@@ -8,9 +8,6 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if(!session('admin')){
-            return redirect('/login');
-        }
 
         $applications = Application::all();
 

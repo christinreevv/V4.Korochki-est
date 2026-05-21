@@ -2,44 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Application;
+class ApplicationController extends Controller {
 
-class ApplicationController extends Controller
-{
-    public function index() {
-$applications = Application::where('user_id', session('user')->id)->get();
-return view('applications.index', compact('applications'));
+public function index () {
+    $applications = Application::where('user_id', session('user')->id)->get();
 
+    return view('applications.index', compact('applications'));
 }
 
- public function create()
-    {
-        return view('applications.create');
-    }
+public function create () {
+return view('applications.create');
+}
 
-    public function register(Request $request)
-    {
+public function store (Request $request) {
 
-        $request->validate([
+ $validation = $request->validate([
             'course_name' => ['required'],
+            'payment_method' => ['required'],
             'start_date' => ['required'],
-            'payment' => ['required'],
         ]);
 
         $user = User::create([
-            'full_name' => $validation['full_name'],
-            'phone' => $validation['phone'],
-            'password' => Hash::make($validation['password']),
-            'login' => $validation['login'],
-            'email' => $validation['email'],
-            'role' => 'user',
+            'user_id' => session('user')->id,
+            'course_name' => $validation['course_name'],
+            'payment_method' => $validation['payment_method'],
+            'start_date' => $validation['start_date'],
+            'status' => $validation['status'],
         ]);
 
-        Auth::login($user);
+        return redirect('/applications');
 
-        return redirect('/')->with('suc', 'suc');
+}
 
-    }
+public function review (Request $request, $id) {
+
+
+$application = Application::find($id);
+
+$application->review = $request->review;
+
+$application->save();
+
+return back();
+
+
+
+}
+
+
+
 
 }
