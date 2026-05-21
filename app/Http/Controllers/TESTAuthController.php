@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class AuthController extends Controller
 {
     public function registerForm()
@@ -16,22 +14,23 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function register(Request $request)
+    public function registration()
     {
-        $validation = $request->validate([
+        $validate = $request->validate([
             'full_name' => ['required', 'regex:/^[А-Яа-яЁё\s]+$/u'],
-            'login' => ['required', 'regex:/^[A-Za-z0-9]+$/', 'min:6', 'unique:users,login'],
-            'password' => ['required', 'min:8'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'phone' => ['required', 'unique:users,phone', 'regex:/^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/'],
+            'phone' => ['required', 'regex:/^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/', 'unique:users,phone'],
+            'login' => ['required', 'regex:/^[A-Za-z0-9]+$/', 'unique:users,login', 'min:6'],
+            'password' => ['required', 'min:8'],
         ]);
 
         $user = User::create([
-            'full_name' => $validation['full_name'],
-            'login' => $validation['login'],
-            'password' => $validation['password'],
-            'email' => $validation['email'],
-            'phone' => $validation['phone'],
+            'full_name' => $validate['full_name'],
+            'email' => $validate['email'],
+            'phone' => $validate['phone'],
+            'login' => $validate['login'],
+            'password' => Hash::make($validate['password']),
+            'role' => 'user',
         ]);
 
         Auth::login($user);
@@ -40,9 +39,8 @@ class AuthController extends Controller
 
     }
 
-    public function login(Request $request)
+    public function login()
     {
-
         $creds = $request->validate([
             'login' => ['required'],
             'password' => ['required'],
@@ -50,7 +48,7 @@ class AuthController extends Controller
 
         if (! Auth::attempt($creds)) {
             return back()->withErrors([
-                'login' => 'jocklsdcmsl',
+                'login' => 'fksdod',
             ])->onlyInput('login');
         }
 
@@ -59,16 +57,15 @@ class AuthController extends Controller
         return redirect('/')->with('suc', 'suc');
     }
 
-    public function logout()
-    {
+    public function logout() {
 
-        Auth::logout();
+    Auth::logout();
 
-        $request->session->invalidate(); // session без ()!!!
+        $request->session->invalidate();
 
-        $request->session->regenerateToken();
+            $request->session->regenerateToken();
 
-        return redirect('/login')->with('suc', 'suc');
+   return redirect('/login')->with('suc', 'suc');
 
     }
 }
