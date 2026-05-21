@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Application;
+use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
@@ -21,18 +21,18 @@ class ApplicationController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validation = $request->validate([
             'course_name' => 'required',
             'start_date' => 'required',
-            'payment_method' => 'required'
+            'payment_method' => 'required',
         ]);
 
-        Application::create([
+        $application = Application::create([
             'user_id' => session('user')->id,
-            'course_name' => $request->course_name,
-            'start_date' => $request->start_date,
-            'payment_method' => $request->payment_method,
-            'status' => 'Новая'
+            'course_name' => $validation['course_name'],
+            'start_date' => $validation['start_date'],
+            'payment_method' => $validation['payment_method'],
+            'status' => 'Новая',
         ]);
 
         return redirect('/applications');
