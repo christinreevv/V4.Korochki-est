@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         if (! Auth::attempt($creds)) {
             return back()->withErrors([
-                'login' => 'lol',
+                'login' => 'u are dumb',
             ])->onlyInput('login');
         }
 

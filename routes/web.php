@@ -43,7 +43,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])
         ->name('admin.index');
 
-    Route::post('/admin/status/{id}', [AdminController::class, 'status'])
+    Route::put('/admin/status/{id}', [AdminController::class, 'status'])
         ->name('admin.status');
 
 });
