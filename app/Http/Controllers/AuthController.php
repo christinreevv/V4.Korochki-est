@@ -61,11 +61,11 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/')->with('suc', 'suc');
+        return redirect('/')->with('success', 'URA');
 
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
 
