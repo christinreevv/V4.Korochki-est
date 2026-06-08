@@ -15,8 +15,6 @@ Route::get('/login', [AuthController::class, 'loginForm']); // показ фор
 Route::post('/register', [AuthController::class, 'register'])->name('register'); // регистрация
 Route::post('/login', [AuthController::class, 'login'])->name('login'); // авторизация
 
-Route::get('/logout', [AuthController::class, 'logout']); // выход
-
 Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])

@@ -4,7 +4,7 @@
 
 <div class="container">
 
-    <div id="mainCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div id="mainCarousel" class="carousel slide mb-5" data-bs-ride="carousel"  data-bs-interval="3000"> СМЕНА СЛАЙДЕРА КАЖДЫЕ 3 СЕКУНДЫ
 
         <div class="carousel-inner rounded">
 

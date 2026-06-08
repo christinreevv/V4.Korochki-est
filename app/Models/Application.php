@@ -8,17 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     protected $fillable = [
-
         'user_id',
-
         'course_name',
-
         'start_date',
-
         'payment_method',
-
         'status',
-
         'review',
     ];
 
