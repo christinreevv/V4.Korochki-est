@@ -7,19 +7,18 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
-   public function index()
-{
-    $applications = Application::where('user_id', auth()->id())
-        ->latest()
-        ->get()
-        ->map(function ($app) {
-            $app->can_review = $app->status === 'Завершено';
-            return $app;
-        });
+    public function index()
+    {
+        $applications = Application::where('user_id', auth()->id())
+            ->latest()
+            ->get()
+            ->map(function ($app) {
+                $app->can_review = $app->status === 'Завершено';
+                return $app;
+            });
 
-    return view('applications.index', compact('applications'));
-}
-
+        return view('applications.index', compact('applications'));
+    }
 
     public function create()
     {
@@ -45,25 +44,24 @@ class ApplicationController extends Controller
         return redirect('/applications');
     }
 
-   public function review(Request $request, $id)
-{
-    $request->validate([
-        'review' => ['required', 'min:3']
-    ]);
+    public function review(Request $request, $id)
+    {
+        $request->validate([
+            'review' => ['required', 'min:3'],
+        ]);
 
-    $application = Application::where('user_id', auth()->id())
-        ->findOrFail($id);
+        $application = Application::where('user_id', auth()->id())
+            ->findOrFail($id);
 
-    // Проверка статуса
-    if ($application->status !== 'Завершено') {
-        return back()->with('error', 'Отзыв можно оставить только после завершения курса');
+        // Проверка статуса
+        if ($application->status !== 'Обучение завершено') {
+            return back()->with('error', 'Отзыв можно оставить только после завершения курса');
+        }
+
+        $application->update([
+            'review' => $request->review,
+        ]);
+
+        return back()->with('success', 'Отзыв добавлен');
     }
-
-    $application->update([
-        'review' => $request->review
-    ]);
-
-    return back()->with('success', 'Отзыв добавлен');
-}
-
 }

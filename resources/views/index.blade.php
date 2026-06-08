@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="carousel-item">
+            <div class="carousel-item>"
                 <img src="https://picsum.photos/1200/400?2" class="d-block w-100">
                 <div class="carousel-caption">
                     <h3>Профессиональные курсы</h3>

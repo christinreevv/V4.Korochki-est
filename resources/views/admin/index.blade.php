@@ -34,7 +34,6 @@
                         {{ $app->payment_method }}
                     </p>
 
-                    <!-- БЛОК СТАТУСА И ОТЗЫВА ДЛЯ АДМИНА -->
                     <div class="mt-auto">
                         <form action="/admin/status/{{ $app->id }}" method="POST" class="mb-3">
                             @csrf
