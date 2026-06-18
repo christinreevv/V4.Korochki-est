@@ -9,9 +9,21 @@
 
         @if ($errors->any())
             <div class="alert alert-danger">
-                {{ $errors->first() }}
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
             </div>
         @endif
+
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
 
         <form action="{{ route('register') }}" method="POST">
             @csrf
